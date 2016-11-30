@@ -1,35 +1,68 @@
 import React, { Component } from 'react'
 import { TextInput, StyleSheet, Navigator, Text, View, TouchableOpacity, AlertIOS } from 'react-native'
+import { Loading } from './loading'
 
 var data = {}
 export default class SearchBar extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      name: ''
+      name: '',
+      animation: false
     }
   }
+
   render () {
     return (
       <Navigator renderScene={this.renderScene.bind(this)} navigator={this.props.navigator} />
     )
   }
 
-  goToProfile () {
-    this.props.searchUser(this.state.name)
-    console.log(this.props)
-    if (this.state.name.length > 0) {
-      this.props.navigator.push({
-        id: 'Profile',
-        passProps: { myWord: this.state.name }
+  // componentWillUpdate() { 
+  //   console.log(" CWU called")
+  //   const { state, navigator } = this.props
+  //   console.log(state)
+  //   if (state.userId.length > 0) {
+  //     navigator.push({
+  //       id: 'Profile'
+  //     })
+  //   } else {
+  //     AlertIOS.alert(
+  //       'Text Missing'
+  //     )
+  //   }
+  // }
+
+  componentWillReceiveProps() {
+    console.log(" CWRP called")
+    const { state, navigator } = this.props
+    if (state.userId.length > 0) {
+      navigator.push({
+        id: 'Profile'
       })
-    }
-    else {
+    } else {
       AlertIOS.alert(
-       'Text Missing'
-       )
+        'Text Missing'
+      )
     }
   }
+  goToProfile () {
+    this.props.searchUser(this.state.name)
+    const { state } = this.props
+    console.log(state, this.props, state.userId)
+  // if (state.userId.length > 0) {
+  //   this.props.navigator.push({
+  //     id: 'Profile',
+  //     passProps: { myWord: this.state.name }
+  //   })
+  // }
+  // else {
+  //   AlertIOS.alert(
+  //    'Text Missing'
+  //    )
+  // }
+  }
+
   renderScene (route, navigator) {
     return (
       <View style={styles.container}>
@@ -48,11 +81,12 @@ export default class SearchBar extends Component {
       </View>
     )
   }
-
 }
+
 SearchBar.propTypes = {
   searchUser: React.PropTypes.func.isRequired,
-  navigator: React.PropTypes.any.isRequired
+  navigator: React.PropTypes.any.isRequired,
+  state: React.PropTypes.any.isRequired
 }
 
 const styles = StyleSheet.create({

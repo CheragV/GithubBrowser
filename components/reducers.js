@@ -7,8 +7,8 @@
 import * as types from './actionTypes'
 
 var initialState = {
-  userId: 'temp',
   userdata: {
+    userId: '',
     name: '',
     followers: '',
     repositories: '',
@@ -17,19 +17,17 @@ var initialState = {
   currentRepo: ''
 }
 
-export default function reducers (state = initialState, action) {
+export default function gitBookReducer (state = initialState, action) {
   switch (action.type) {
     case types.SEARCH_USER:
-      var url = 'https://api.github.com/users/' + action.user
+      var url = `https://api.github.com/users/${action.user}`
       var text = fetch(url).then((res)=>res.json()).then((data) => {
-        var nextState = state
+        var nextState = state.userdata
+        nextState.userId = data.login
         nextState.name = data.name
-        // var userdata = {}
-        // userdata.name = data.name
-        // userdata.followers = data.followers
-        // userdata.repositories = data.repos_url
-        // userdata.location = data.location
-        // console.log(data,state)
+        nextState.followers = data.followers
+        nextState.repositories = data.repos_url
+        nextState.location = data.location
         console.log(nextState)
         return {
           ...state,
