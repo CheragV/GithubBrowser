@@ -12,7 +12,8 @@ var initialState = {
     name: '',
     followers: '',
     repositories: '',
-    location: ''
+    location: '',
+    found: 0
   },
   currentRepo: ''
 }
@@ -21,14 +22,14 @@ export default function gitBookReducer (state = initialState, action) {
   switch (action.type) {
     case types.SEARCH_USER:
       var url = `https://api.github.com/users/${action.user}`
-      var text = fetch(url).then((res)=>res.json()).then((data) => {
-        var nextState = state.userdata
+      var text = fetch(url).then((res)=> res.json()).then((data) => {
+        var nextState = state.userdata   //JSON.parse(JSON.stringify())
         nextState.userId = data.login
         nextState.name = data.name
         nextState.followers = data.followers
         nextState.repositories = data.repos_url
         nextState.location = data.location
-        console.log(nextState)
+        nextState.found = 1
         return {
           ...state,
           nextState
@@ -36,7 +37,7 @@ export default function gitBookReducer (state = initialState, action) {
       }).catch((err) => {
         console.log('oh no!',err)
         return {
-          ...state
+          ...state, found: 2
         }
       })
       

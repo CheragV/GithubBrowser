@@ -21,6 +21,7 @@ class Git extends Component {
       />
       ) }
 
+
   renderScene (route, navigator) {
     console.log('Props received ', this.props)
     const { searchUser, fetchData, state } = this.props

@@ -24,7 +24,7 @@ export default class SearchBar extends Component {
   //   console.log(state)
   //   if (state.userId.length > 0) {
   //     navigator.push({
-  //       id: 'Profile'
+  //       id: 'Profile' 
   //     })
   //   } else {
   //     AlertIOS.alert(
@@ -33,34 +33,22 @@ export default class SearchBar extends Component {
   //   }
   // }
 
-  componentWillReceiveProps() {
-    console.log(" CWRP called")
-    const { state, navigator } = this.props
-    if (state.userId.length > 0) {
-      navigator.push({
-        id: 'Profile'
-      })
-    } else {
-      AlertIOS.alert(
-        'Text Missing'
-      )
-    }
-  }
   goToProfile () {
     this.props.searchUser(this.state.name)
     const { state } = this.props
     console.log(state, this.props, state.userId)
-  // if (state.userId.length > 0) {
-  //   this.props.navigator.push({
-  //     id: 'Profile',
-  //     passProps: { myWord: this.state.name }
-  //   })
-  // }
-  // else {
-  //   AlertIOS.alert(
-  //    'Text Missing'
-  //    )
-  // }
+    setTimeout(() => {}, 1000)
+    if (this.state.name.length > 0) {
+      this.props.navigator.push({
+        id: 'Profile',
+        passProps: { myWord: this.state.name }
+      })
+    }
+    else {
+      AlertIOS.alert(
+     'Text Missing'
+     )
+  }
   }
 
   renderScene (route, navigator) {
