@@ -13,6 +13,7 @@ export default class SearchBar extends Component {
   }
 
   render () {
+    console.log("Props received")
     return (
       <Navigator renderScene={this.renderScene.bind(this)} navigator={this.props.navigator} />
     )
@@ -35,20 +36,26 @@ export default class SearchBar extends Component {
 
   goToProfile () {
     this.props.searchUser(this.state.name)
-    const { state } = this.props
+    const { state, navigator } = this.props
     console.log(state, this.props, state.userId)
-    setTimeout(() => {}, 1000)
-    if (this.state.name.length > 0) {
-      this.props.navigator.push({
-        id: 'Profile',
-        passProps: { myWord: this.state.name }
-      })
-    }
-    else {
-      AlertIOS.alert(
-     'Text Missing'
-     )
-  }
+    setTimeout(() => {
+      console.log(state.userId)
+      if (state.userId) {
+        console.log('Popped')
+        navigator.replace({
+          id: 'Profile'
+        })
+      } else {
+        AlertIOS.alert(
+          'User Not Found'
+        )
+        navigator.pop()
+      }
+    }, 7000)
+
+    navigator.push({
+      id: 'Progress'
+    })
   }
 
   renderScene (route, navigator) {

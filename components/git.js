@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import { TextInput, Navigator, Text, View, TouchableOpacity } from 'react-native'
 import SearchBar from './searchBar'
+import Progress from './progress'
 import Profile from './profile.js'
+import Webview from './webview'
 import * as actions from './actions'
 import { connect } from 'react-redux'
 
@@ -34,6 +36,16 @@ class Git extends Component {
     if (routeId === 'Profile') {
       return (
         <Profile state={state} fetchData={fetchData} navigator={navigator} />
+      )
+    }
+    if (routeId === 'Progress') {
+      return (
+        <Progress state={state} searchUser={searchUser} navigator={navigator} />
+      )
+    }
+    if (routeId === 'WebView') {
+      return (
+        <Webview state={state} searchUser={searchUser} navigator={navigator} {...route.passProps}/>
       )
     }
   }
