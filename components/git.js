@@ -45,7 +45,7 @@ class Git extends Component {
     }
     if (routeId === 'WebView') {
       return (
-        <Webview state={state} searchUser={searchUser} navigator={navigator} {...route.passProps}/>
+        <Webview state={state} searchUser={searchUser} navigator={navigator} {...route.passProps} />
       )
     }
   }

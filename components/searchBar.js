@@ -51,7 +51,7 @@ export default class SearchBar extends Component {
         )
         navigator.pop()
       }
-    }, 7000)
+    }, 5000)
 
     navigator.push({
       id: 'Progress'

@@ -8,10 +8,7 @@ class Webview extends Component {
 
   render () {
     return (
-
         <WebView source={{uri: this.props.url}} style={{marginTop: 20}} />
-      
-
     )
   }
 }
