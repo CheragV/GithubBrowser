@@ -1,61 +1,35 @@
 import React, { Component } from 'react'
-import { TextInput, StyleSheet, Navigator, Text, View, TouchableOpacity, AlertIOS } from 'react-native'
-import { Loading } from './loading'
+import { TextInput, StyleSheet, ActivityIndicator, Navigator, Text, View, TouchableOpacity, AlertIOS } from 'react-native'
+import Profile from './profile.js'
 
-var data = {}
 export default class SearchBar extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      name: '',
-      animation: false
+      name: ''
     }
   }
 
   render () {
-    console.log("Props received")
+    console.log('Props received', this.props)
+    if (this.props.userData) {
+      return (
+        <Profile userData={this.props.userData} navigator={this.props.navigator} />
+      )
+    }
     return (
       <Navigator renderScene={this.renderScene.bind(this)} navigator={this.props.navigator} />
     )
   }
 
-  // componentWillUpdate() { 
-  //   console.log(" CWU called")
-  //   const { state, navigator } = this.props
-  //   console.log(state)
-  //   if (state.userId.length > 0) {
-  //     navigator.push({
-  //       id: 'Profile' 
-  //     })
-  //   } else {
-  //     AlertIOS.alert(
-  //       'Text Missing'
-  //     )
-  //   }
-  // }
-
   goToProfile () {
-    this.props.searchUser(this.state.name)
-    const { state, navigator } = this.props
-    console.log(state, this.props, state.userId)
-    setTimeout(() => {
-      console.log(state.userId)
-      if (state.userId) {
-        console.log('Popped')
-        navigator.replace({
-          id: 'Profile'
-        })
-      } else {
-        AlertIOS.alert(
-          'User Not Found'
-        )
-        navigator.pop()
-      }
-    }, 5000)
-
-    navigator.push({
-      id: 'Progress'
+    console.log(this.props)
+    this.props.navigator.push({
+      id: 'Profile'
     })
+    this.props.searchUser(this.state.name)
+    
+    // setTimeout(() => this.props.navigator.pop(), 5000)
   }
 
   renderScene (route, navigator) {
@@ -81,7 +55,7 @@ export default class SearchBar extends Component {
 SearchBar.propTypes = {
   searchUser: React.PropTypes.func.isRequired,
   navigator: React.PropTypes.any.isRequired,
-  state: React.PropTypes.any.isRequired
+  userData: React.PropTypes.any.isRequired
 }
 
 const styles = StyleSheet.create({

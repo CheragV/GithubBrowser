@@ -1,2 +1,2 @@
-export const SEARCH_USER = 'SEARCH_USER'
-export const FETCH_DATA = 'FETCH_DATA'
+export const USER_FOUND = 'USER_FOUND'
+export const IS_LOADED = 'IS_LOADED'

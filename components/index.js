@@ -1,14 +1,16 @@
 import React, {Component} from 'react'
 import { createStore, applyMiddleware, combineReducers } from 'redux'
 import { Provider } from 'react-redux'
-import createlogger from 'redux-logger'
+import thunk from 'redux-thunk'
 
 import * as reducers from './reducers'
 import Git from './git'
 
-const logger = createlogger()
-const createStoreWithMiddleware = applyMiddleware(logger)(createStore)
-const store = createStoreWithMiddleware(combineReducers(reducers))
+// const createStoreWithMiddleware = applyMiddleware(thunk)(createStore)
+// const store = createStoreWithMiddleware(combineReducers(reducers))
+
+let reducer = combineReducers(reducers)
+let store = createStore(reducer, applyMiddleware(thunk))
 
 const Main = () => {
   return (

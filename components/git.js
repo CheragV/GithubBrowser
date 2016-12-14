@@ -9,7 +9,20 @@ import { connect } from 'react-redux'
 
 var routeId
 class Git extends Component {
+  constructor (props) {
+    super(props)
+  }
+  componentWillReceiveProps () {
+    console.log("Props received ", this.props)
+  }
+
   render () {
+    // if (this.props.isLoaded && this.props.userData) {
+    //   navigator.replace({
+    //     id: 'Profile'
+    //   })
+    // }
+    console.log('Props received are = ', this.props)
     return (
       <Navigator
         renderScene={(route, navigator) => this.renderScene(route, navigator)}
@@ -22,48 +35,45 @@ class Git extends Component {
         }}
       />
       ) }
-
-
   renderScene (route, navigator) {
-    console.log('Props received ', this.props)
-    const { searchUser, fetchData, state } = this.props
+    const { searchUser, userData } = this.props
     routeId = route.id
     if (routeId === 'SearchBar') {
       return (
-        <SearchBar state={state} searchUser={searchUser} navigator={navigator} />
+        <SearchBar userData={userData} searchUser={searchUser} navigator={navigator} />
       )
     }
     if (routeId === 'Profile') {
       return (
-        <Profile state={state} fetchData={fetchData} navigator={navigator} />
+        <Profile userData={userData} navigator={navigator} />
       )
     }
     if (routeId === 'Progress') {
       return (
-        <Progress state={state} searchUser={searchUser} navigator={navigator} />
+        <Progress userData={userData} navigator={navigator} />
       )
     }
     if (routeId === 'WebView') {
       return (
-        <Webview state={state} searchUser={searchUser} navigator={navigator} {...route.passProps} />
+        <Webview state={userData} searchUser={searchUser} navigator={navigator} {...route.passProps} />
       )
     }
   }
 }
 Git.propTypes = {
   searchUser: React.PropTypes.func.isRequired,
-  fetchData: React.PropTypes.func.isRequired,
-  state: React.PropTypes.any.isRequired
+  isLoaded: React.PropTypes.any.isRequired,
+  userData: React.PropTypes.any.isRequired
 }
 
 
 export default connect(
   (state) => ({
-    state: state.default.userdata
+    userData: state.userData,
+    isLoaded: state.isLoaded
   }),
   (dispatch) => ({
-    searchUser: (user) => dispatch(actions.searchUser(user)),
-    fetchData: () => dispatch(actions.fetchData())
+    searchUser: (user) => dispatch(actions.searchUser(user))
   })
 )(Git)
 

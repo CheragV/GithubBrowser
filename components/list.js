@@ -10,12 +10,8 @@ class List extends Component {
       dataSource: ds.cloneWithRows(this.props.projects)
     }
   }
-  handlePress (name) {
-    const { url, navigator } = this.props
-    console.log(url, navigator, name)
-  }
   render () {
-      const { url, navigator } = this.props
+    const { url, navigator } = this.props
     console.log('In List View', this.props.projects)
     return (
       <ListView dataSource={this.state.dataSource} renderRow={(rowData) => <Row 
